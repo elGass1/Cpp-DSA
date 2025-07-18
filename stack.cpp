@@ -1,30 +1,90 @@
 #include <iostream>
-#include <stack>
+#include <queue>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
-void displayStack(stack <int> s){
-    //since the stack can only give us access to the most top element
-    //we must pop each element after display
-    while (!s.empty()){
-        cout<<s.top()<<' ';
-        s.pop();
+//displaying queue elements
+void display(queue <int> q){
+    cout<< "Queue: ";
+    while(!q.empty()){
+        cout<< q.front()<<" ";
+        q.pop();
     }
+    cout<<endl;
+}
+
+//sorting the queue
+void sortQueue(queue <int> & q){
+    vector <int> v;
+    while (!q.empty()){
+        v.push_back(q.front());
+        q.pop();
+    }
+    sort(v.begin(), v.end());
+    for(int x: v){
+        q.push(x);
+    }
+}
+
+//reversing vthe queue
+void reverseQueue(queue <int>&q){
+    vector <int> v;
+    while(!q.empty()){
+        v.push_back(q.front());
+        q.pop();
+    }
+    reverse(v.begin(), v.end());
+    for (int x: v){
+        q.push(x);
+    }
+}
+
+//search for a certain value
+bool searchQueue(queue <int> q, int key){
+    while (!q.empty()){
+        if(q.front()==key){
+            return true;
+        }
+        q.pop();
+    }
+    return false;
 }
 
 int main(){
 
-    stack <int> s;
-    //inserting elements into the stack
-    s.push(69);
-    s.push(96);
-    s.push(88);
-    //stack contains {88,96,69}
-    //removing elements from the stack
-    s.pop();
-    //now it contains {96,69}
-    displayStack(s);
-    return 0;
+    //manually filling the queue
     
+    queue <int> q;
+    q.push(14);
+    q.push(16);
+    q.push(96);
+    q.push(22);
+    cout<<"after enqueue: \n";
+    display(q);
 
+    q.pop();
+    cout<<"\n after dequeue \n";
+    display(q);
+
+    int key=30;
+    if(searchQueue(q,key)==true){
+        cout<<key<<" does exist in the queue";
+    }else{
+        cout<<key<<" does not exist in the queue";
+    }
+
+    //queue after sorting
+    sortQueue(q);
+    cout<<"\n after sorting \n";
+    display(q);
+
+
+    //queue after reversing
+    reverseQueue(q);
+    cout<<"\n after reversing\n";
+    display(q);
+
+    return 0;
 }
